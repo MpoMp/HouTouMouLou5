@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>Geolocation</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles/layout.css" type="text/css">
+<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+</head>
+
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="index.html">HTML5 Demonstration</a></h1>
+	  <br>
+      <h2>Multimedia Technology Course 2014-2015</h2>
+    </div>
+    <nav>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li class="last"><a href="about.html">About</a></li>
+		</ul>
+    </nav>
+  </header>
+</div>
+
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- main content -->
+    <div id="homepage">
+
+
+	<section id="services" class="clear">
+		<article class="four_quarter">
+		
+	<!--<a href="src"><img src="images/###.jpg" alt="" style="width:300px;height:380px">></a>-->
+					
+		<h1> HTML Geolocation </h1>
+			<p>The <b>W3C Geolocation API</b> is an effort by the <b>World Wide Web Consortium (W3C)</b> to standardize an interface to retrieve the geographical location information for a client-side device.
+			</p>
+			<p>The most common sources of location information are <b>IP address</b>, <b>Wi-Fi</b> and <b>Bluetooth MAC address</b>, <b>radio-frequency identification (RFID)</b>, <b>Wi-Fi connection location</b>, or <b>device Global Positioning System (GPS)</b> and <b>GSM/CDMA cell IDs</b>.	
+			</p>
+			
+			<br>
+			
+			<h1> Geolocation for mobile devices </h1>
+			<p>Some popular mobile devices — like the iPhone and Android phones — support two methods of figuring out where you are. 
+			The <b>first method triangulates your position based on your relative proximity to different cellular towers operated by your phone carrier</b>. 
+			This method is fast and doesn’t require any dedicated GPS hardware, but it only gives you a rough idea of where you are. 
+			Depending on how many cell towers are in your area, “a rough idea” could be as little as one city block or as much as a kilometer in every direction. 
+			</p>
+			
+			<p>The <b>second method actually uses dedicated GPS hardware on your device to talk to dedicated GPS positioning satellites</b> that are orbiting the Earth. 
+			GPS can usually pinpoint your location within a few meters. The downside is that the dedicated GPS chip on your device draws a lot of power, so phones and other general purpose mobile devices usually turn off the chip until it’s needed. 
+			That means there will be a startup delay while the chip is initializing its connection with the GPS satellites in the sky.
+			</p>
+			
+		<br>
+		
+		<h1> Using Geolocation </h1>
+		<p>The geolocation <abbr>API</abbr> centers around <b>navigator.geolocation</b> which is a new property on the global <b>navigator</b> object. 
+		</p>
+		
+		<p> A simple example where we only call <i>navigator.geolocation.getCurrentPosition(showPosition)</i> via a script to get coordinates:
+		</p>
+		
+		<hr>
+		<center><button onclick="getLocation()">Get Location</button>
+
+		<p id="geo_demo1"></p>
+
+<script>
+var x = document.getElementById("geo_demo1");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "<b>Latitude:</b> " + position.coords.latitude + 
+    "<br><b>Longitude:</b> " + position.coords.longitude;	
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+</script>
+</center>
+		
+		<hr>
+		<br>
+		<p>We can specify a second parameter on the getCurrentPosition function to handle errors:
+		</p>
+		<p><pre>navigator.geolocation.getCurrentPosition(show_map, handle_error)</pre></p>
+		
+		<p>by using standard error codes:	
+		</p>
+		<p><pre>error.PERMISSION_DENIED, error.POSITION_UNAVAILABLE, error.TIMEOUT, error.UNKNOWN_ERROR</pre></p>
+		
+		<br>
+		<p>The <b>getCurrentPosition</b> function has an optional third argument, a PositionOptions object. 
+		There are three properties you can set in a PositionOptions object. All the properties are optional.
+		</p>
+	
+	<ul>
+	<li>The <b>enableHighAccuracy</b> property is exactly what it sounds like. If true, and the device can support it, and the user consents to sharing their exact location, then the device will try to provide it.</li>
+	<li>The <b>timeout</b> property is the number of milliseconds your web application is willing to wait for a position.</li>
+	<li>The <b>maximumAge</b> property allows the device to answer immediately with a cached position.</li>
+	</ul>
+		
+	<br>
+	<h1>Using Google Maps</h1>
+	
+	<hr>
+	<center>
+
+<button onclick="getLocation2()">Get position on interactive map.</button>
+
+<p id="geo_demo2"></p>
+
+<div id="mapholder"></div>
+
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<script>
+var x2 = document.getElementById("geo_demo2");
+function getLocation2() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition2, showError);
+    } else { 
+        x2.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition2(position) {
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    latlon = new google.maps.LatLng(lat, lon)
+    mapholder = document.getElementById('mapholder')
+    mapholder.style.height = '250px';
+    mapholder.style.width = '500px';
+
+    var myOptions = {
+    center:latlon,zoom:14,
+    mapTypeId:google.maps.MapTypeId.ROADMAP,
+    mapTypeControl:false,
+    navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+    }
+    
+    var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+    var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+}
+
+
+</script>
+</center>
+	
+		<hr>
+		<br>
+		
+		<p>The <b>watchPosition</b> function has the same structure as getCurrentPosition. 
+		It takes two callback functions, a required one for success and an optional one for error conditions, and it can also take an optional PositionOptions object that has all the same properties. 
+		The difference is that your callback function will be called every time the user’s location changes.
+		</p>
+		
+		
+		<hr>
+
+        </article>
+		</section>
+    </div>
+    <!-- / content body -->
+  </div>
+</div>
+
+
+<!-- Copyright -->
+<div class="wrapper row4">
+  <footer id="copyright" class="clear">
+    <!-- <p class="fl_left">Copyright &copy; 2012 - All Rights Reserved - <a href="#">Domain Name</a></p> -->
+    <p class="fl_right">Base template by <a href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a>, edited by M. Bogdanos</p>
+  </footer>
+</div>
+</body>
+</html>
