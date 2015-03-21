@@ -1,1 +1,115 @@
-storage.html
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>Web Storage</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles/layout.css" type="text/css">
+<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+</head>
+
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="index.html">HTML5 Demonstration</a></h1>
+	  <br>
+      <h2>Multimedia Technology Course 2014-2015</h2>
+    </div>
+    <nav>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li class="last"><a href="about.html">About</a></li>
+		</ul>
+    </nav>
+	
+  </header>
+</div>
+
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- main content -->
+    <div id="homepage">
+
+
+	<section id="services" class="clear">
+		<article class="four_quarter">
+						
+		<h1> HTML Web/Local Storage </h1>
+			<p>With local storage, web applications can store data locally within the user's browser. 
+			Before HTML5, application data had to be stored in cookies, included in every server request. 
+			Local storage is more secure, and large amounts of data can be stored locally, without affecting website performance.</p>
+
+		<p>Unlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server.
+		Local storage is per domain. All pages, from one domain, can store and access the same data.
+		</p>
+			
+			<hr>
+			<br>
+			
+			
+			
+			<h1>Local Storage Objects</h1>
+<p>HTML local storage provides two objects for storing data on the client:</p>
+<ul>
+	<li>window.localStorage - stores data with no expiration date</li>
+	<li>window.sessionStorage - stores data for one session (data is lost when the 
+	tab is closed)</li>
+</ul>
+
+<p>
+The <b>localStorage</b> object stores the data with no expiration date. 
+The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
+</p>
+
+<hr>
+<center>
+<script>
+function clickCounter() {
+    if(typeof(Storage) !== "undefined") {
+        if (localStorage.clickcount) {
+            localStorage.clickcount = Number(localStorage.clickcount)+1;
+        } else {
+            localStorage.clickcount = 1;
+        }
+        document.getElementById("result").innerHTML = "<b>You tried " + localStorage.clickcount + " time(s) but failed.</b>";
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+    }
+}
+
+function resetCounter(){
+	localStorage.removeItem("clickcount");
+}
+</script>
+
+<p><button onclick="clickCounter()" type="button">Click to delete win32 file.</button></p>
+<div id="result"></div>
+<p><button onclick="resetCounter()" type="button">Click to reset your failed attempts.</button></p>
+</center>
+<hr>
+
+<p>The <b>sessionStorage</b> object is equal to the localStorage object, <strong>except</strong> 
+that it stores the data for only one session. The data is deleted when the user closes the browser window.</p>
+
+
+
+
+
+			</article>
+	</section>	
+    </div>
+    <!-- / content body -->
+  </div>
+</div>		
+		
+
+<!-- Copyright -->
+<div class="wrapper row4">
+  <footer id="copyright" class="clear">
+    <!-- <p class="fl_left">Copyright &copy; 2012 - All Rights Reserved - <a href="#">Domain Name</a></p> -->
+    <p class="fl_right">Base template by <a href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a>, edited by M. Bogdanos</p>
+  </footer>
+</div>
+</body>
+</html>
