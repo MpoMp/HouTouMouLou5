@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html manifest="demo.appcache" lang="en" dir="ltr">
 <head>
 <title>App Cache</title>
 <meta charset="utf-8">
@@ -35,11 +35,92 @@
 	<section id="services" class="clear">
 		<article class="four_quarter">
 						
+	<h1>HTML5 Application Cache</h1>
+	<p>With application cache it is easy to make an offline version of a web application, by creating a cache manifest file.</p>
+	
+	<p>Application cache gives an application three advantages:</p>
+	<ol>
+		<li><b>Offline browsing</b> - users can use the application when they're offline</li>
+		<li><b>Speed</b> - cached resources load faster</li>
+		<li><b>Reduced server load</b> - the browser will only download updated/changed resources 
+	from the server</li>
+	</ol>
+	
+	<hr><br>
+	
+	<h1>Cache Manifest Basics</h1>
+<p>To enable application cache, include the manifest attribute in the document's &lt;html&gt; tag:</p>
+<div class="code notranslate"><pre>
+&lt;!DOCTYPE HTML&gt;
+&lt;html manifest="demo.appcache"&gt;
+...
+&lt;/html&gt;
+</pre></div>
+
+<p><b>Every page with the manifest attribute specified will be cached when the user visits it.</b> If the 
+manifest attribute is not specified, the page will not be cached (unless the page is specified directly in the manifest file).</p>
+<p>The recommended file extension for manifest files is: ".appcache"</p>
+	
+<p>The <b>manifest file</b> is a simple text file, which tells the browser what to cache (and what to never cache).</p>
+<p>It has three sections:</p>
+<ul>
+	<li><b>CACHE MANIFEST</b> - Files listed under this header will be cached 
+	after they are downloaded for the first time</li>
+	<li><b>NETWORK</b> - Files listed under this header require a connection to the server, 
+	and will never be cached</li>
+	<li><b>FALLBACK</b> - Files listed under this header specifies fallback 
+	pages if a page is inaccessible</li>
+
+	
+	<p>Once an application is cached, it remains cached until one of the following happens:</p>
+<ul>
+	<li>The user clears the browser's cache</li>
+	<li>The manifest file is modified</li>
+	<li>The application cache is programmatically updated</li>
+</ul>
 
 
 
+<hr><br>
+<center>
+<script src="scripts/h5utils-offline.js"></script>
+    <article>
+      <p>A good working example is to load this demo up, then disconnect - the page will still reload.</p>
+      <p>Status of cache: </p>
+      <p id="status">checking...</p>
+      <p><input type="button" id="update" value="Update cache status" /></p>
+      <!--<p><input type="button" id="swap" value="Update cache to latest" /></p>-->
+    </article>
+<script>
 
+var cacheStates = ["UNCACHED (numeric value 0) -- The ApplicationCache object's cache host is not associated with an application cache at this time.",
+"IDLE (numeric value 1) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is idle, and that application cache is the newest cache in its application cache group, and the application cache group is not marked as obsolete.",
+"CHECKING (numeric value 2) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is checking.",
+"DOWNLOADING (numeric value 3) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is downloading.",
+"UPDATEREADY (numeric value 4) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is idle, and whose application cache group is not marked as obsolete, but that application cache is not the newest cache in its group.",
+"OBSOLETE (numeric value 5) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group is marked as obsolete."];
 
+function updateCacheStatus() {
+  document.querySelector('#status').innerHTML = cacheStates[window.applicationCache.status];
+}
+
+addEvent(document.querySelector('#update'), 'click', function () {
+  window.applicationCache.update();
+});
+
+addEvent(document.querySelector('#swap'), 'click', function () {
+  window.applicationCache.swapCache();
+});
+
+var events = "checking,error,noupdate,downloading,progress,updateready,cached,obsolete".split(',');
+var i = events.length;
+
+while (i--) {
+  addEvent(window.applicationCache, events[i], updateCacheStatus);
+}
+
+</script>
+</center><hr>
 
 			</article>
 	</section>	

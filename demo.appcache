@@ -1,0 +1,10 @@
+CACHE MANIFEST
+
+CACHE:
+styles/layout.css
+images/*
+scripts/h5utils-offline.js
+
+NETWORK:
+http://*
+https://*

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<title>Server-Sent Events</title>
+<title>About</title>
 <meta charset="utf-8">
 <link rel="stylesheet" href="styles/layout.css" type="text/css">
 <!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
@@ -31,34 +31,13 @@
     <!-- main content -->
     <div id="homepage">
 
+
 	<section id="services" class="clear">
 		<article class="four_quarter">
 						
-	<h1>HTML5 Server-Sent Events</h1>
-	<p>A server-sent event is when a web page automatically gets updates from a server.</p>
-<p>This was also possible before, but the web page would have to ask if any updates were 
-available. With server-sent events, the updates come automatically.</p>
-<p>Examples: Facebook/Twitter updates, stock price updates, news feeds, sport results, etc.</p>
-<hr>
-<br>
 
-<p>The <b>EventSource</b> object is used to receive server-sent event notifications:</p>
-<div class="code notranslate"><pre>
-var source = new EventSource("serverpage.php");
-source.onmessage = function(event) {
-    document.getElementById("result").innerHTML += event.data + "&lt;br&gt;";
-};</pre></div>
 
-<p>Example explained:</p>
-<ul>
-	<li>Create a new EventSource object, and specify the URL of the page sending the updates </li>
-	<li>Each time an update is received, the onmessage event occurs</li>
-	<li>When an onmessage event occurs, put the received data into the element with id="result"</li>
-</ul>
 
-<hr><br>
-
-<a href="http://www.w3schools.com/html/tryit.asp?filename=tryhtml5_sse">W3C Example</a>
 
 
 
