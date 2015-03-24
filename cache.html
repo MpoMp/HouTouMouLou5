@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="styles/layout.css" type="text/css">
 <!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
 </head>
-
+<script src="scripts/h5utils.js"></script>
 <body>
 <div class="wrapper row1">
   <header id="header" class="clear">
@@ -83,42 +83,22 @@ manifest attribute is not specified, the page will not be cached (unless the pag
 
 <hr><br>
 <center>
-<script src="scripts/h5utils-offline.js"></script>
-    <article>
-      <p>A good working example is to load this demo up, then disconnect - the page will still reload.</p>
-      <p>Status of cache: </p>
-      <p id="status">checking...</p>
-      <p><input type="button" id="update" value="Update cache status" /></p>
-      <!--<p><input type="button" id="swap" value="Update cache to latest" /></p>-->
-    </article>
+<p>Current network status: <span id="status">checking...</span></p>
+  <ol id="state"></ol>
+</article>
 <script>
+var statusElem  = document.getElementById('status'),
+    state               = document.getElementById('state');
 
-var cacheStates = ["UNCACHED (numeric value 0) -- The ApplicationCache object's cache host is not associated with an application cache at this time.",
-"IDLE (numeric value 1) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is idle, and that application cache is the newest cache in its application cache group, and the application cache group is not marked as obsolete.",
-"CHECKING (numeric value 2) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is checking.",
-"DOWNLOADING (numeric value 3) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is downloading.",
-"UPDATEREADY (numeric value 4) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group's update status is idle, and whose application cache group is not marked as obsolete, but that application cache is not the newest cache in its group.",
-"OBSOLETE (numeric value 5) -- The ApplicationCache object's cache host is associated with an application cache whose application cache group is marked as obsolete."];
-
-function updateCacheStatus() {
-  document.querySelector('#status').innerHTML = cacheStates[window.applicationCache.status];
+function online(event) {
+  statusElem.className = navigator.onLine ? 'online' : 'offline';
+  statusElem.innerHTML = navigator.onLine ? 'online' : 'offline';
+  state.innerHTML += '<li>New event: ' + event.type + '</li>';
 }
 
-addEvent(document.querySelector('#update'), 'click', function () {
-  window.applicationCache.update();
-});
-
-addEvent(document.querySelector('#swap'), 'click', function () {
-  window.applicationCache.swapCache();
-});
-
-var events = "checking,error,noupdate,downloading,progress,updateready,cached,obsolete".split(',');
-var i = events.length;
-
-while (i--) {
-  addEvent(window.applicationCache, events[i], updateCacheStatus);
-}
-
+addEvent(window, 'online', online);
+addEvent(window, 'offline', online);
+online({ type: 'ready' });
 </script>
 </center><hr>
 

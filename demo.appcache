@@ -1,10 +1,17 @@
 CACHE MANIFEST
 
 CACHE:
+cache.html
 styles/layout.css
 images/*
-scripts/h5utils-offline.js
 
 NETWORK:
-http://*
-https://*
+index.html
+intro.html
+geo.html
+dnd.html
+storage.html
+workers.html
+sse.html
+graphics.html
+about.html
